@@ -1577,9 +1577,8 @@ function renderResourcesDashboard(){
       '<div class="item-status open">Open &#8599;</div>' +
     '</a>'
   ).join('');
-  return '<div class="progress-hero"><div>' +
-    '<h2>Resources</h2><p>Your reference library &mdash; opens in SharePoint (Centific sign-in)</p>' +
-  '</div></div><div class="card-list">' + cards + '</div>';
+  return '<div class="learning-header"><h1>Resources</h1><p>Your reference library &mdash; opens in SharePoint (Centific sign-in)</p></div>' +
+  '<div class="card-list">' + cards + '</div>';
 }
 
 /* ===================== SESSION CHECKLIST ===================== */
@@ -1721,8 +1720,8 @@ function renderChecklist(){
       '<svg width="16" height="16" viewBox="0 0 18 18" fill="none" style="transform:rotate(' + (open?'180':'0') + 'deg);transition:transform .2s"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
       '</div><div class="checklist-body' + (open?' open':'') + '"><div class="checklist-body-inner body-content">' + s.body + '</div></div></div>';
   }).join('');
-  return '<div class="viewer"><h1>&#9776; Session Checklist</h1>' +
-    '<div class="meta">Pine, end to end &mdash; keep this open in another tab while you moderate. Expand only the section you need.</div>' +
+  return '<div class="learning-header"><h1>Session Checklist</h1><p>Pine, end to end &mdash; keep this open in another tab while you moderate</p></div>' +
+    '<div class="viewer">' +
     sectionsHtml +
     '<h2 style="margin-top:26px">Recording tracker</h2>' +
     '<p style="font-size:14.5px;color:var(--text-dim);line-height:1.6;margin:0 0 14px">18 recordings per session, each on a fresh topic &mdash; pull from the <a href="' + RESOURCES.find(r=>r.id==='topic_bank').url + '" target="_blank" rel="noopener">Topic &amp; Prompt Bank</a>. Targets below are a pacing guide, not a rigid script; hard bounds for any single recording are <strong>5&ndash;10 min</strong>. Enter each recording&#39;s actual length as you go &mdash; the total updates live.</p>' +
