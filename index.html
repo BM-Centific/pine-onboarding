@@ -54,12 +54,15 @@ a{color:var(--accent-light);}
 .hidden{display:none !important;}
 .page{display:none;min-height:100dvh;}
 .page.active{display:flex;flex-direction:column;}
-.wrap{max-width:760px;margin:0 auto;padding:26px 20px 70px;width:100%;}
+.wrap{max-width:1180px;margin:0 auto;padding:26px 32px 70px;width:100%;}
+@media (max-width:780px){.wrap{padding:26px 16px 70px;}}
 </style>
 <style>
 /* Header */
 .app-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:12px;flex-wrap:wrap;}
 .brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:18px;letter-spacing:-.02em;}
+.brand .brand-sub{color:var(--text-faint);font-weight:400;font-size:15px;}
+@media (max-width:780px){.brand .brand-sub{display:none;}}
 .brand-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:var(--on-accent);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;flex-shrink:0;box-shadow:0 4px 14px var(--accent-glow);}
 .who{font-size:12.5px;color:var(--text-dim);text-align:right;display:flex;align-items:center;gap:10px;}
 .who .who-text{text-align:right;}
@@ -94,7 +97,7 @@ a{color:var(--accent-light);}
 .item-info{flex:1;min-width:0;}
 .item-info h3{margin:0 0 3px;font-size:15px;letter-spacing:-.01em;}
 .item-info p{margin:0;font-size:12.5px;color:var(--text-dim);}
-.item-status{font-size:11px;padding:4px 11px;border-radius:20px;font-weight:600;flex-shrink:0;white-space:nowrap;}
+.item-status{font-size:10.5px;padding:4px 11px;border-radius:20px;font-weight:600;flex-shrink:0;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em;}
 .item-status.done{background:var(--accent-glow);color:var(--accent-light);}
 .item-status.open{background:var(--bg-elev-2);color:var(--text-dim);}
 .item-status.locked{background:var(--bg-elev-2);color:var(--text-faint);}
@@ -1393,7 +1396,7 @@ function renderHeader(){
   if (!state.user) return '';
   return '' +
   '<div class="app-header">' +
-    '<div class="brand"><div class="brand-mark">P</div> Pine Onboarding</div>' +
+    '<div class="brand"><div class="brand-mark">P</div> Project Pine <span class="brand-sub">&middot; Onboarding</span></div>' +
     '<div class="who">' +
       '<div class="who-text">' + state.user.name + '<br><span class="role-tag">' + state.user.role + (state.user.locale ? ' &middot; ' + state.user.locale : '') + '</span></div>' +
       '<button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme">' + themeIconSvg() + '</button>' +
@@ -1575,7 +1578,7 @@ function renderResourcesDashboard(){
     '</a>'
   ).join('');
   return '<div class="progress-hero"><div>' +
-    '<h2>Resources</h2><p>Links to the live source documents on SharePoint &mdash; opens in a new tab.</p>' +
+    '<h2>Resources</h2><p>Your reference library &mdash; opens in SharePoint (Centific sign-in)</p>' +
   '</div></div><div class="card-list">' + cards + '</div>';
 }
 
@@ -1719,7 +1722,7 @@ function renderChecklist(){
       '</div><div class="checklist-body' + (open?' open':'') + '"><div class="checklist-body-inner body-content">' + s.body + '</div></div></div>';
   }).join('');
   return '<div class="viewer"><h1>&#9776; Session Checklist</h1>' +
-    '<div class="meta">Keep this open in a second tab during a live session</div>' +
+    '<div class="meta">Pine, end to end &mdash; keep this open in another tab while you moderate. Expand only the section you need.</div>' +
     sectionsHtml +
     '<h2 style="margin-top:26px">Recording tracker</h2>' +
     '<p style="font-size:14.5px;color:var(--text-dim);line-height:1.6;margin:0 0 14px">18 recordings per session, each on a fresh topic &mdash; pull from the <a href="' + RESOURCES.find(r=>r.id==='topic_bank').url + '" target="_blank" rel="noopener">Topic &amp; Prompt Bank</a>. Targets below are a pacing guide, not a rigid script; hard bounds for any single recording are <strong>5&ndash;10 min</strong>. Enter each recording&#39;s actual length as you go &mdash; the total updates live.</p>' +
