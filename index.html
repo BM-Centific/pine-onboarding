@@ -166,6 +166,7 @@ a{color:var(--accent-light);}
 .step-btn:hover{background:var(--bg-elev);color:var(--text);}
 .step-val{width:44px;text-align:center;background:transparent;border:none;color:var(--text);font-family:var(--font-num);font-size:14px;padding:6px 0;-moz-appearance:textfield;}
 .step-val::-webkit-outer-spin-button,.step-val::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.step-val::placeholder{color:var(--text-faint);}
 .step-val:focus{outline:none;}
 .check-group{margin:10px 0 4px;}
 .check-item{display:flex;align-items:flex-start;gap:12px;padding:9px 0;cursor:pointer;font-size:14.5px;line-height:1.55;color:var(--text);border-bottom:1px solid var(--border);}
@@ -1703,7 +1704,7 @@ function buildRecTable(){
     rows += '<tr><td>' + i + '</td><td>~' + REC_TARGET_PER + ' min</td><td>' +
       '<div class="rec-stepper">' +
         '<button class="step-btn" onclick="adjustRec(\'' + key + '\',-1)" aria-label="Decrease minutes">&minus;</button>' +
-        '<input type="number" class="step-val" value="' + val + '" min="0" onchange="setRecMinutes(\'' + key + '\', this.value)">' +
+        '<input type="text" inputmode="numeric" class="step-val" value="' + (val || '') + '" placeholder="0" onfocus="this.select()" onchange="setRecMinutes(\'' + key + '\', this.value)" onblur="if(!this.value)this.value=\'\'">' +
         '<button class="step-btn" onclick="adjustRec(\'' + key + '\',1)" aria-label="Increase minutes">+</button>' +
       '</div>' +
     '</td></tr>';
