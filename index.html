@@ -1279,7 +1279,7 @@ function extractArray(data){
 async function readRows(url){
   if (!url) return [];
   try {
-    const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({}) });
+    const res = await fetch(url);
     if (!res.ok) { console.warn('[Pine] read failed:', url, 'HTTP', res.status); return []; }
     const text = await res.text();
     let data; try { data = JSON.parse(text); } catch(e){ return []; }
@@ -1291,7 +1291,7 @@ async function readRows(url){
 async function writeRow(url, row){
   if (!url) return false;
   try {
-    const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(row) });
+    const res = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(row) });
     if (!res.ok) console.warn('[Pine] write failed:', url, 'HTTP', res.status);
     return res.ok;
   } catch(e){ console.warn('[Pine] write threw:', url, e.message); return false; }
