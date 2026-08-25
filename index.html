@@ -1406,15 +1406,31 @@ function normalizeDirRow(u){
   };
 }
 
-async function completeLogin(email, matchOverride){
-  const canon = email.toLowerCase();
-  /* Fetch directory + progress in PARALLEL, not sequentially -- two
-     Power Automate round-trips one after another was the cause of Pine's
-     slow login (~5s) compared to Maple, which already parallelizes these. */
-  const [liveDir, progressRows] = await Promise.all([
+/* Pre-fetch directory + progress the instant the page loads, in the
+   background, while the moderator is still reading/typing on the login
+   screen -- mirrors Maple's loadData() pattern. By the time they click
+   Continue, this has almost always already resolved, so completeLogin()
+   below just awaits the SAME promise instead of starting a fresh fetch
+   at that moment. This is what actually made Maple feel instant while
+   Pine felt slow -- parallelizing the two calls (see completeLogin)
+   wasn't enough on its own if they only start after the button click. */
+let _prefetchPromise = null;
+let _prefetchReady = false;
+function prefetchDirectoryAndProgress(){
+  if (_prefetchPromise) return _prefetchPromise;
+  _prefetchPromise = Promise.all([
     readDirectory(),
     PROGRESS_PA_READ_URL ? readRows(PROGRESS_PA_READ_URL) : Promise.resolve([])
-  ]);
+  ]).then(result => { _prefetchReady = true; return result; });
+  return _prefetchPromise;
+}
+async function completeLogin(email, matchOverride){
+  const canon = email.toLowerCase();
+  // Only show a "Signing in..." message if the prefetch genuinely hasn't
+  // resolved yet -- matches Maple's `if(!DATA_READY)` pattern exactly,
+  // rather than flashing this on every login regardless of readiness.
+  if (!_prefetchReady) { state.err = 'Signing in…'; render(); }
+  const [liveDir, progressRows] = await prefetchDirectoryAndProgress();
   const dir = liveDir || DEMO_DIRECTORY;
   DIRECTORY = dir;
   let match = matchOverride || dir.find(u => u.email.toLowerCase() === canon);
@@ -2125,6 +2141,11 @@ function boot(){
   }
   applyTheme();
   render();
+  // Kick off in the background regardless of path taken above -- an
+  // auto-resumed session still benefits from a fresh copy for its next
+  // save, and a login screen benefits from having this ready before
+  // the moderator even finishes typing their email.
+  prefetchDirectoryAndProgress();
 }
 boot();
 </script>
