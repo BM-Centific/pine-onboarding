@@ -102,6 +102,8 @@ a{color:var(--accent-light);}
 .item-info h3{margin:0;font-size:15.5px;font-weight:600;letter-spacing:-.01em;}
 .item-info p{margin:2px 0 0;font-size:12.5px;color:var(--text-dim);}
 .item-status{font-size:11px;padding:4px 11px;border-radius:20px;font-weight:600;flex-shrink:0;white-space:nowrap;text-transform:uppercase;letter-spacing:.04em;}
+.item-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.item-time{font-size:11px;color:var(--text-faint);}
 .item-status.done{background:var(--accent-glow);color:var(--accent-light);}
 .item-status.open{background:var(--bg-elev-2);color:var(--text-dim);}
 .item-status.locked{background:var(--bg-elev-2);color:var(--text-faint);}
@@ -109,7 +111,8 @@ a{color:var(--accent-light);}
 .viewer{background:var(--bg-elev);border:1px solid var(--border);border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow-sm);}
 .viewer-back{background:none;border:none;color:var(--text-dim);font-size:13px;cursor:pointer;padding:0;margin-bottom:16px;font-family:var(--font);}
 .viewer-back:hover{color:var(--accent-light);}
-.viewer h1{margin:0 0 20px;font-size:24px;font-weight:600;letter-spacing:-.03em;}
+.viewer h1{margin:0 0 4px;font-size:24px;font-weight:600;letter-spacing:-.03em;}
+.viewer .r-sub{color:var(--text-dim);font-size:14px;margin-bottom:22px;}
 .viewer .meta{color:var(--accent-light);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
 .viewer-actions{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:12px;flex-wrap:wrap;}
 .hint{font-size:12px;color:var(--text-faint);}
@@ -377,7 +380,7 @@ const VIDEO_EMBEDS = {
 };
 const MODULES = [
 {
-id:'welcome_pine', num:1, ic:'\ud83d\udc4b', title:'Welcome to Project Pine', duration:'~5 min',
+id:'welcome_pine', num:1, ic:'\ud83d\udc4b', title:'Welcome to Project Pine', sub:'What we\'re building and your role', duration:'~5 min',
 html:`
 <h2>What is Project Pine?</h2>
 <p>Project Pine is a remote telephony data-collection program. As a moderator, you host structured phone-style voice-call sessions with pairs of participants having natural, unscripted conversations. The audio and its transcription train Automatic Speech Recognition (ASR) systems in the target language.</p>
@@ -397,7 +400,7 @@ quiz:[
 }
 ,
 {
-id:'about_centific', num:2, ic:'🌐', title:'Who is Centific?', duration:'~5 min',
+id:'about_centific', num:2, ic:'🌐', title:'Who is Centific?', sub:'Who we are, and what your role is as a moderator', duration:'~5 min',
 html:`
 <h2>1. Who is Centific?</h2>
 <p>Centific is a global data and AI solutions company. We do not build the AI products you would recognize by name &mdash; we build the data those products learn from, which is why Centific is sometimes described as the hidden infrastructure behind AI models.</p>
@@ -455,7 +458,7 @@ quiz:[
 }
 ,
 {
-id:'telephony_upclose', num:3, ic:'\ud83d\udcde', title:'Telephony Conversations, Up Close', duration:'~6 min',
+id:'telephony_upclose', num:3, ic:'\ud83d\udcde', title:'Telephony Conversations, Up Close', sub:'What makes a conversation natural, interactive, and usable', duration:'~6 min',
 html:`
 <h2>Natural and spontaneous</h2>
 <p>Unscripted talk, start to finish. No reading, no rehearsed lines, no AI-generated content. If it sounds prepared, it fails.</p>
@@ -488,7 +491,7 @@ quiz:[
 }
 ,
 {
-id:'qa_bar', num:4, ic:'\ud83c\udfaf', title:'Recording Quality &amp; the QA Bar', duration:'~6 min',
+id:'qa_bar', num:4, ic:'\ud83c\udfaf', title:'Recording Quality &amp; the QA Bar', sub:'What every delivered recording must clear', duration:'~6 min',
 html:`
 <p>Module 3 covered what makes a recording <em>valid</em>. This module covers what happens when something goes wrong mid-take &mdash; what you fix live, and what sends a take back for a full re-record.</p>
 <h2>Correct it, or reject it?</h2>
@@ -536,7 +539,7 @@ quiz:[
 }
 ,
 {
-id:'oneforma_tooling', num:5, ic:'🧰', title:'OneForma Tooling Walkthrough', duration:'~8 min',
+id:'oneforma_tooling', num:5, ic:'🧰', title:'OneForma Tooling Walkthrough', sub:'Access the tool, check your profile, and find your session', duration:'~8 min',
 html:`
 <p>The Session SOP (Module 6) tells you <em>what</em> to do and <em>why</em>. This module shows the <em>click-by-click</em> tool steps &mdash; from your first sign-in to a fully closed session.</p>
 <h2>Part A &middot; Getting set up</h2>
@@ -601,7 +604,7 @@ quiz:[
 }
 ,
 {
-id:'running_session', num:6, ic:'📞', title:'Running a Pine Session', duration:'~10 min',
+id:'running_session', num:6, ic:'📞', title:'Running a Pine Session', sub:'Enter the room, record, QA, and close out — end to end', duration:'~10 min',
 html:`
 <p>This module is the operational run-sheet for a Pine session &mdash; what to do, in order, from joining the room to closing it out. It is a summary for onboarding; keep the full Session SOP open as your reference for your first several live sessions.</p>
 <h2>Before you join</h2>
@@ -761,7 +764,7 @@ quiz:[
 }
 ,
 {
-id:'moderating_natural', num:7, ic:'\ud83c\udf9b\ufe0f', title:'Moderating for Natural Conversation', duration:'~5 min',
+id:'moderating_natural', num:7, ic:'\ud83c\udf9b\ufe0f', title:'Moderating for Natural Conversation', sub:'Steer it — and when to stop vs. nudge', duration:'~5 min',
 html:`
 <h2>Facilitate. Don&#39;t interview, don&#39;t participate.</h2>
 <p>The moderator facilitates the conversation from outside the delivered audio. You are not an interviewer working through a list of questions, and you are not a third participant in the chat. Your job is to set the scene and then get out of the way.</p>
@@ -801,7 +804,7 @@ quiz:[
 }
 ,
 {
-id:'full_walkthrough', num:8, ic:'\ud83c\udfac', title:'Watch: Full Session Walkthrough', duration:'~10 min',
+id:'full_walkthrough', num:8, ic:'\ud83c\udfac', title:'Watch: Full Session Walkthrough', sub:'A complete session, demonstrated end to end', duration:'~10 min',
 html:`
 <div class="callout warn"><strong>Video coming soon.</strong> Pine doesn&#39;t have its own recorded session walkthrough yet. This module gives you the same walkthrough in text form, following one example session start to finish, until the video is ready.</div>
 <h2>7:55 AM &mdash; Joining the room</h2>
@@ -829,7 +832,7 @@ quiz:[
 }
 ,
 {
-id:'privacy_conduct', num:9, ic:'\ud83d\udd12', title:'Privacy &amp; Professional Conduct', duration:'~5 min',
+id:'privacy_conduct', num:9, ic:'\ud83d\udd12', title:'Privacy &amp; Professional Conduct', sub:'Names, PII, and handling participants', duration:'~5 min',
 html:`
 <h2>Names: the whole system depends on them</h2>
 <p>Participants always use either the alias they chose at signup, or simply their first name only &mdash; never a full real name. You are the one exception: you use your real first name, because you&#39;re the accountable professional in the room, and participants are protected contributors. Confirm what each participant wants to be called at the start of every session, and remind speakers not to use full names, locations, workplaces, or other personal details on the recording.</p>
@@ -858,7 +861,7 @@ quiz:[
 }
 ,
 {
-id:'rep_centific', num:10, ic:'🏢', title:'Representing Centific', duration:'~6 min',
+id:'rep_centific', num:10, ic:'🏢', title:'Representing Centific', sub:'How you show up — in sessions, in chat, and everywhere else', duration:'~6 min',
 video:'centific_branding',
 html:`
 <div class="vid-slot" data-video="centific_branding">
@@ -894,7 +897,7 @@ quiz:[
 }
 ,
 {
-id:'rep_expectations', num:11, ic:'🤝', title:'Setting Expectations with Participants', duration:'~6 min',
+id:'rep_expectations', num:11, ic:'🤝', title:'Setting Expectations with Participants', sub:'Brief them fully before the first recording — it makes everything easier', duration:'~6 min',
 html:`
 <h2>Lay out the roadmap</h2>
 <p>Setting expectations before you capture anything is the highest-leverage thing you do all session. An informed participant performs better, needs fewer retakes, and leaves satisfied.</p>
@@ -937,7 +940,7 @@ quiz:[
 }
 ,
 {
-id:'rep_comms', num:12, ic:'💬', title:'Communicating During the Session', duration:'~8 min',
+id:'rep_comms', num:12, ic:'💬', title:'Communicating During the Session', sub:'Staying muted, using chat, and steering the conversation', duration:'~8 min',
 html:`
 <h2>Your voice is not the data. Theirs is.</h2>
 <p>While a take is running, you stay muted. The recording is two speakers talking to each other, and your voice on it will necessitate a retake. Each speaker is recorded on an isolated channel, and moderator speech captured on a speaker's channel is grounds for rejection.</p>
@@ -974,7 +977,7 @@ quiz:[
 }
 ,
 {
-id:'scripts_journey', num:13, ic:'📜', title:'Scripts: The Participant Journey', duration:'~8 min',
+id:'scripts_journey', num:13, ic:'📜', title:'Scripts: The Participant Journey', sub:'Ready-to-use scripts for common situations — welcome to close', duration:'~8 min',
 video:'moderator_scripts',
 html:`
 <div class="vid-slot" data-video="moderator_scripts">
@@ -1030,7 +1033,7 @@ quiz:[
 }
 ,
 {
-id:'scripts_pressure', num:14, ic:'🛡️', title:'Scripts: Pressure and Boundaries', duration:'~9 min',
+id:'scripts_pressure', num:14, ic:'🛡️', title:'Scripts: Pressure and Boundaries', sub:'What to say when things get difficult', duration:'~9 min',
 html:`
 <p class="callout" style="margin-top:0"><strong>No video for this module.</strong> Text only &mdash; these scripts are read-and-reference rather than walkthrough material.</p>
 <h2>5.1 Questions about the client or how data is used</h2>
@@ -1094,7 +1097,7 @@ quiz:[
 }
 ,
 {
-id:'contacts_full', num:15, ic:'📇', title:'Who to Contact', duration:'~5 min',
+id:'contacts_full', num:15, ic:'📇', title:'Who to Contact', sub:'Your contacts, where to route participants, and when to escalate', duration:'~5 min',
 html:`
 <h2>Your contacts</h2>
 <table>
@@ -1134,7 +1137,7 @@ quiz:[
 }
 ,
 {
-id:'centific_works', num:16, ic:'🏗️', title:'How Centific Works With You', duration:'~5 min',
+id:'centific_works', num:16, ic:'🏗️', title:'How Centific Works With You', sub:'Your agency employs you. Centific directs the work. Here’s why that matters.', duration:'~5 min',
 html:`
 <h2>You work with Centific. Your agency employs you.</h2>
 <p>Those are two different relationships, and keeping them clear protects you as much as it protects us. Centific directs the moderation work: what the sessions need, how the data is captured, and what good quality looks like. Your agency is your employer. They hold your contract, they pay you, and they handle everything about your terms of work.</p>
@@ -1188,7 +1191,7 @@ quiz:[
 }
 ,
 {
-id:'hours_pay', num:17, ic:'💰', title:'Your Hours and Pay', duration:'~5 min',
+id:'hours_pay', num:17, ic:'💰', title:'Your Hours and Pay', sub:'Logging your time and how payment works', duration:'~5 min',
 video:'samay_timesheet',
 html:`
 <h2>When your paid time started</h2>
@@ -1238,7 +1241,7 @@ quiz:[
 }
 ,
 {
-id:'next_steps', num:18, ic:'\ud83c\udf89', title:'Next Steps', duration:'~3 min', noQuiz:true,
+id:'next_steps', num:18, ic:'\ud83c\udf89', title:'Next Steps', sub:'You\'ve finished training — here\'s what happens now', duration:'~3 min', noQuiz:true,
 html:`
 <p><strong>Congratulations &mdash; you&#39;ve completed Pine moderator training.</strong> Here&#39;s exactly what happens between now and your first real session.</p>
 <h2>1. Your training pay</h2>
@@ -1575,8 +1578,8 @@ function renderLearningDashboard(){
       '<div class="step-marker-col"><div class="' + dotCls + '">' + dotContent + '</div>' + (isLast ? '' : '<div class="' + lineCls + '"></div>') + '</div>' +
       '<div class="item-card ' + status + '" onclick="' + (isLocked ? '' : "openModule('"+m.id+"')") + '">' +
         '<div class="item-ic">' + m.ic + '</div>' +
-        '<div class="item-info"><h3>' + m.title + '</h3><p>' + m.duration + '</p></div>' +
-        '<div class="item-status ' + status + '">' + label + '</div>' +
+        '<div class="item-info"><h3>' + m.title + '</h3><p>' + m.sub + '</p></div>' +
+        '<div class="item-right"><span class="item-time">' + m.duration + '</span><div class="item-status ' + status + '">' + label + '</div></div>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -1690,6 +1693,7 @@ function renderModuleViewer(){
   let html = '<div class="viewer"><button class="viewer-back" onclick="backToLearningDashboard()">&larr; Back to learning path</button>' +
     '<div class="meta">Module ' + m.num + ' of ' + MODULES.length + ' &middot; ' + m.duration + '</div>' +
     '<h1>' + m.ic + ' ' + m.title + '</h1>' +
+    '<div class="r-sub">' + m.sub + '</div>' +
     '<div class="body-content">' + m.html + '</div>' +
     renderQuiz(m) +
     '<div class="viewer-actions">' +
