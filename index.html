@@ -29,6 +29,7 @@
   --font-num:'Avenir Next','Avenir','SF Pro Display',-apple-system,sans-serif;
 }
 [data-theme="dark"]{
+  color-scheme:dark;
   --bg:#0B120F; --bg-glow:#123328;
   --bg-elev:#151F1B; --bg-elev-2:#1C2A24; --bg-elev-3:#24352D;
   --text:#F3EDE6; --text-dim:#A9B5AE; --text-faint:#6E7A73;
@@ -37,6 +38,7 @@
   --on-accent:#04241a;
 }
 [data-theme="light"]{
+  color-scheme:light;
   --bg:#F4F7F5; --bg-glow:#DCF0E6;
   --bg-elev:#ffffff; --bg-elev-2:#EEF5F1; --bg-elev-3:#E1EEE7;
   --text:#16211C; --text-dim:#526059; --text-faint:#889089;
@@ -330,6 +332,7 @@ a{color:var(--accent-light);}
 .checklist-body-inner{padding:6px 16px 18px;}
 .rec-table{width:100%;border-collapse:collapse;font-size:13.5px;}
 .rec-table th{text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);padding:7px 8px;}
+.rec-topic-select{background:var(--input-bg);border:.5px solid var(--border-strong);color:var(--text);font-size:12.5px;padding:6px 8px;border-radius:8px;min-width:150px;max-width:190px;font-family:var(--font);}
 .rec-table td{padding:7px 8px;border-top:1px solid var(--border);}
 .rec-table input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);}
 .complete-hero{text-align:center;padding:16px 0 8px;}
@@ -667,6 +670,7 @@ ${fig('of19','Clicking RECORD asks you to confirm before recording starts.')}
 ${fig('of20','While recording, RECORD becomes STOP — click STOP to end the take.')}
 ${fig('of21','REC counts up in the top-left corner while recording is live.')}
 ${fig('of22','After you stop, the take saves to Media Files as a Draft (longer takes can take a few minutes to appear).')}
+<div class="callout info">Since files don&#39;t appear (or become taggable) right away, it&#39;s easy to lose track of which topic went with which take by the time you sit down to QA. The <strong>Session Checklist</strong>&#39;s recording tracker has a <strong>Topic discussed</strong> dropdown for exactly this &mdash; jot it down right after each take so you have it to go off of during QA, instead of relying on memory.</div>
 <h2>Steer natural conversation</h2>
 <ul>
 <li><strong>Topic selection:</strong> familiar, personally engaging topics &mdash; daily routines, family, food, technology, work, opinions &mdash; reliably elicit relaxed, natural speech.</li>
@@ -758,7 +762,6 @@ ${fig('of32','Open the session, scroll to Actions, and click Close Session.')}
 quiz:[
  {q:'How many recordings make up a full Pine session, and how long is each targeted to run?', options:['10 recordings, 15\u201328 minutes each','18 recordings, 5\u201310 minutes each','As many as fit, no fixed target'], correct:1},
  {q:'A conversation runs 4 minutes and 20 seconds before a natural close. What happens to it?', options:['It passes, since it felt natural','It fails QA \u2014 hard minimum is 5 minutes','It passes as a Weak Pass'], correct:1},
- {q:'What is the single hard cap on how much audio one speaker can contribute across the whole program?', options:['2 hours cumulative','1 session only','No cap, as long as they are willing'], correct:0},
  {q:'After you click END to leave the room, what is the second required step?', options:['Nothing else is needed','Go to Operation \u2192 Sessions and click Close Session','Email your PM to confirm the session happened'], correct:1}
 ]
 }
@@ -1104,10 +1107,9 @@ html:`
 <tr><th>If you need&hellip;</th><th>Contact</th><th>Title</th><th>Email</th></tr>
 <tr><td>Anything about <strong>Pine</strong>: process, scheduling, sessions</td><td>Saswati Sinha</td><td>Senior Project Manager</td><td>saswati.sinha@centific.com</td></tr>
 <tr><td><strong>Training material, this app, OneForma, and tooling questions</strong></td><td>Bhargav</td><td>Project Coordinator</td><td>bhargavsai.m@centific.com</td></tr>
-<tr><td><strong>Onboarding, certification, your progress, access problems, Samay timesheet, and PID questions</strong></td><td>Akiko (backup: Amy Johns)</td><td>Operations Manager</td><td>akiko.yeckley@centific.com</td></tr>
+<tr><td><strong>Samay timesheet and PID assignments</strong></td><td>Akiko (backup: Amy Johns)</td><td>Operations Manager</td><td>akiko.yeckley@centific.com</td></tr>
 <tr><td><strong>Participant protocol</strong>: conduct questions</td><td>Drew</td><td>Senior Quality Lead</td><td>andrew.sowers@centific.com</td></tr>
-<tr><td><strong>Your hours</strong>: reconciling, corrections</td><td>Saswati Sinha</td><td>Senior Project Manager</td><td>saswati.sinha@centific.com</td></tr>
-<tr><td><strong>Your pay, rate, bonuses, future work</strong></td><td>Your agency</td><td>&mdash;</td><td>Centific cannot answer these. See Module 16, "How Centific Works With You."</td></tr>
+<tr><td><strong>Your rate, bonuses, raises, or future work</strong></td><td>Your agency</td><td>&mdash;</td><td>Centific cannot answer these. See Module 16, "How Centific Works With You."</td></tr>
 </table>
 <h2>Where you send participants</h2>
 <table>
@@ -1197,7 +1199,7 @@ html:`
 <h2>When your paid time started</h2>
 <p>The qualification assessment you completed in OneForma was <strong>not paid</strong>. This onboarding training <strong>is</strong>. From the moment you reach this app, your time counts. Log your onboarding hours in Samay against the Project ID below.</p>
 <h2>Your timesheet</h2>
-<p><strong>Your Samay hours become your paycheck.</strong> The approved-hours figure your Project Manager submits is built from what you logged. Late or missing entries delay your own payment.</p>
+<p><strong>Your Samay hours become your paycheck.</strong> Late or missing entries delay your own payment.</p>
 <p>How to log in: enter the following URL into your browser:</p>
 <p><a href="https://timesheet.centific.com/#/login" target="_blank" rel="noopener">https://timesheet.centific.com/#/login</a></p>
 <p>Click on &#39;Login by SSO&#39;. Use your Centific v-dash email credential and password. Your moderator email address was provided to you from Centific IT inside your welcome letter.</p>
@@ -1206,13 +1208,20 @@ html:`
   <div id="vidslot-samay_timesheet"></div>
 </div>
 <div class="callout" style="font-size:14px"><strong>Project Pine</strong>: UWHSZZZZZ26I030 &mdash; Telephony OTS Pine</div>
+<h2>Key dates in Samay</h2>
+<p>These are shown on the Samay home screen &mdash; check them each pay period:</p>
+<ul>
+<li><strong>Prelim cutoff date:</strong> the auto-approval date for the month. After this date, you can no longer submit a new time entry for that period &mdash; you&#39;ll need to submit an adjustment instead.</li>
+<li><strong>Final cutoff date:</strong> the auto-approval date for adjustment requests.</li>
+</ul>
+<div class="callout danger"><strong>Holidays are not paid.</strong> Submit only your actual working hours on a holiday date, and disregard the default 8-hour entry Samay may pre-fill for that day.</div>
+<div class="callout info"><strong>Don&#39;t worry about exceeding your expected hours.</strong> Submit your actual hours worked, even if that&#39;s more than what was expected for the period.</div>
 <h2>How you&#39;re paid</h2>
 <p><strong>Your agency pays you, not Centific directly.</strong> As a C2C ("Contract 2 Centific") moderator, your contract is with your agency. Centific only approves and reports your hours; your agency issues payment.</p>
 <p><strong>How your hours get there.</strong></p>
 <ul>
 <li>You log your hours in Samay.</li>
-<li>You reconcile your worked hours with your Project Manager.</li>
-<li>At the close of each two-week period, your Project Manager approves the hours and shares them with Centific&#39;s Hiring Manager.</li>
+<li>At the close of each two-week period, your hours are approved and shared with Centific&#39;s Hiring Manager.</li>
 <li>Centific&#39;s Hiring Manager and the Finance Operations Manager both help move your worked hours onward to your agency.</li>
 <li>Your agency pays you.</li>
 </ul>
@@ -1226,12 +1235,12 @@ html:`
 <h2>Where to take a payment question</h2>
 <table>
 <tr><th>Question</th><th>Ask</th></tr>
-<tr><td>"My hours don&#39;t look right"</td><td>Your Project Manager</td></tr>
+<tr><td>"My hours don&#39;t look right," or any PID question</td><td>Akiko Yeckley (backup: Amy Johns)</td></tr>
 <tr><td>"When will I be paid?"</td><td>Your agency</td></tr>
 <tr><td>"What is my rate?"</td><td>Your agency</td></tr>
 <tr><td>"Can I get a raise, a bonus, or more hours?"</td><td>Your agency</td></tr>
 </table>
-<p><strong>Centific staff cannot help with pay.</strong> None of them have authority over your rate, your bonus, or how many hours you are contracted for. Refer back to Module 16, "How Centific Works With You," if you need a refresher.</p>
+<p><strong>Centific staff cannot help with pay rate, bonuses, or contracted hours</strong> &mdash; none of them have authority over that, only your agency does. Refer back to Module 16, "How Centific Works With You," if you need a refresher.</p>
 `,
 quiz:[
  {q:'Is the OneForma qualification assessment paid time?', options:['Yes, it is paid the same as onboarding','No &mdash; paid time starts once you reach this onboarding app','Only if you pass it'], correct:1},
@@ -1245,7 +1254,7 @@ id:'next_steps', num:18, ic:'\ud83c\udf89', title:'Next Steps', sub:'You\'ve fin
 html:`
 <p><strong>Congratulations &mdash; you&#39;ve completed Pine moderator training.</strong> Here&#39;s exactly what happens between now and your first real session.</p>
 <h2>1. Your training pay</h2>
-<p>To cover the time you&#39;ve just spent on this onboarding, <strong>log 2 hours to your Samay timesheet</strong> against your project&#39;s PID (<strong>UWHSZZZZZ26I030</strong>). This is not added for you automatically &mdash; you need to log it yourself, the same way you&#39;d log any other working hours.</p>
+<p>To cover the time you&#39;ve just spent on this onboarding, <strong>log 2.5 hours to your Samay timesheet</strong> against your project&#39;s PID (<strong>UWHSZZZZZ26I030</strong>). This is not added for you automatically &mdash; you need to log it yourself, the same way you&#39;d log any other working hours.</p>
 <h2>2. Set your Working Hours in OneForma</h2>
 <p>Real sessions can only be booked once your availability is on file. Go to <strong>Operation &rarr; Moderators</strong>, select yourself, and set your <strong>Working Hours</strong>, <strong>Scheduling Rules</strong> (timezone), and any <strong>Leave Dates</strong> &mdash; covered in detail in the OneForma Recording Tool module if you need a refresher.</p>
 <div class="callout info"><strong>Working Hours</strong> is a separate section inside the OneForma tool &mdash; it&#39;s not the same as your <strong>Samay</strong> timesheet from Step 1. Samay tracks time you&#39;ve worked; Working Hours tells the system when you&#39;re available to be booked.</div>
@@ -1294,6 +1303,9 @@ let quizIdx = {};
 let checklistOpen = {};
 let checklistChecks = {};
 let recTally = {};
+const RECORDING_TOPICS = ['Daily Life & Routines','Food & Eating','Work & Study','Technology & Media','Travel & Culture','Health & Wellness','Shopping & Services','Hobbies & Free Time','Relationships & Social Life','Self & Identity','Current Events & Opinions','Home & Living','Family & Parenting','Science & Curiosity','No preference'];
+let recTopics = {}; /* { 'rec'+i: topicString } -- lets a moderator jot down what was actually discussed per recording, since Media Files entries don't appear/tag-able immediately; this is their own memory aid for QA later, not a submission to OneForma itself */
+function setRecTopic(key, val){ recTopics[key] = val; persistLocal(); render(); }
 
 function applyTheme(){ document.documentElement.setAttribute('data-theme', state.theme); }
 
@@ -1303,7 +1315,7 @@ function persistLocal(){
   if (!state.user) return;
   try {
     localStorage.setItem(sessionKeyFor(state.user.email), JSON.stringify({
-      user: state.user, quizAnswers, quizIdx, checklistOpen, checklistChecks, recTally, theme: state.theme, progress: PROGRESS.filter(r => r.Email === state.user.email)
+      user: state.user, quizAnswers, quizIdx, checklistOpen, checklistChecks, recTally, recTopics, theme: state.theme, progress: PROGRESS.filter(r => r.Email === state.user.email)
     }));
   } catch(e){ console.warn('[Pine] persist failed:', e.message); }
 }
@@ -1466,7 +1478,7 @@ async function completeLogin(email, matchOverride){
     quizIdx = saved.quizIdx || {};
     checklistOpen = saved.checklistOpen || {};
     checklistChecks = saved.checklistChecks || {};
-    recTally = saved.recTally || {};
+    recTally = saved.recTally || {}; recTopics = saved.recTopics || {};
     state.theme = saved.theme || 'dark';
     if (!PROGRESS_PA_READ_URL) PROGRESS = PROGRESS.filter(r => r.Email !== canon).concat(saved.progress || []);
   }
@@ -1851,7 +1863,7 @@ function setRecMinutes(key, val){
   persistLocal();
   render();
 }
-function resetRecTally(){ recTally = {}; checklistChecks = {}; recTargets = Array.from({length:BASE_REC_COUNT}, ()=>REC_TARGET_PER); persistLocal(); render(); }
+function resetRecTally(){ recTally = {}; checklistChecks = {}; recTopics = {}; recTargets = Array.from({length:BASE_REC_COUNT}, ()=>REC_TARGET_PER); persistLocal(); render(); }
 const REC_TARGET_PER = 8; /* Pine's recordings are structured to run ~8 min each, so no single take drifts near the 10-min hard bound */
 const BASE_REC_COUNT = 18;
 const REC_TARGET_TOTAL = REC_TARGET_PER * BASE_REC_COUNT; /* 144 min -- the real target; fixed regardless of how many recordings it takes to get there */
@@ -1886,22 +1898,25 @@ function buildRecTable(){
     const filled = !!recTally[key];
     const neededVal = Math.min(10, Math.max(5, t + adjustment));
     const neededCell = filled ? '<span style="color:var(--text-dim)">\u2713</span>' : '<span style="color:var(--accent-light);font-weight:600">~' + Math.round(neededVal) + ' min</span>';
+    const topicSel = recTopics[key] || '';
+    const topicOpts = '<option value="">&mdash;</option>' + RECORDING_TOPICS.map(top => '<option value="' + top + '"' + (topicSel===top?' selected':'') + '>' + top + '</option>').join('');
     rows += '<tr><td>' + i + '</td><td>~' + t + ' min</td><td>' +
       '<div class="rec-stepper">' +
         '<button class="step-btn" onclick="adjustRec(\'' + key + '\',-1)" aria-label="Decrease minutes">&minus;</button>' +
         '<input type="text" inputmode="numeric" class="step-val" value="' + (val || '') + '" placeholder="0" onfocus="this.select()" onchange="setRecMinutes(\'' + key + '\', this.value)" onblur="if(!this.value)this.value=\'\'">' +
         '<button class="step-btn" onclick="adjustRec(\'' + key + '\',1)" aria-label="Increase minutes">+</button>' +
       '</div>' +
-    '</td><td>' + neededCell + '</td></tr>';
+    '</td><td>' + neededCell + '</td><td><select class="rec-topic-select" onchange="setRecTopic(\'' + key + '\',this.value)">' + topicOpts + '</select></td></tr>';
   });
   return '<div class="tracker-summary">' +
       '<div class="ts-block"><div class="ts-label">Recorded so far</div><div class="ts-value accent">' + total + ' min</div></div>' +
       '<div class="ts-block right"><div class="ts-label">Remaining (target ~' + REC_TARGET_TOTAL + ' min)</div><div class="ts-value">' + remaining + ' min</div></div>' +
     '</div>' +
     '<div class="callout" style="margin-top:0"><strong>Vs. each recording\'s own target so far:</strong> ' + varianceLabel + ' \u2014 a negative number means shortfall to make up in what\'s left. A positive number means buffer: keep recording at full target length and you\'ll end up with extra deliverable audio (more is generally better), or trim upcoming recordings by roughly that much combined if you\'re pressed for time \u2014 you don\'t need to use the whole buffer just because it\'s there.</div>' +
-    '<table class="rec-table"><tr><th style="width:34px">#</th><th>Target</th><th>Actual (min)</th><th>Needed</th></tr>' + rows + '</table>' +
+    '<div style="overflow-x:auto"><table class="rec-table"><tr><th style="width:34px">#</th><th>Target</th><th>Actual (min)</th><th>Needed</th><th>Topic discussed</th></tr>' + rows + '</table></div>' +
     '<div style="margin-top:10px"><button class="btn-ghost" onclick="addExtraRecording()">+ Add another recording</button></div>' +
-    '<p style="font-size:12.5px;color:var(--text-dim);margin-top:8px">The rows above are a <strong>suggested</strong> breakdown of the ~' + REC_TARGET_TOTAL + '-min target &mdash; in practice you may land on more or fewer recordings than 18, as long as the total gets there. <strong>Needed</strong> recalculates live off each row\'s own suggested length (clamped to Pine\'s 5&ndash;10 min hard bounds), nudged by how far you\'ve drifted from plan &mdash; use it to pace, not as a new fixed target. If you need more recordings than planned, click <strong>Add another recording</strong> above rather than forcing the total into fewer, longer takes.</p>';
+    '<p style="font-size:12.5px;color:var(--text-dim);margin-top:8px">The rows above are a <strong>suggested</strong> breakdown of the ~' + REC_TARGET_TOTAL + '-min target &mdash; in practice you may land on more or fewer recordings than 18, as long as the total gets there. <strong>Needed</strong> recalculates live off each row\'s own suggested length (clamped to Pine\'s 5&ndash;10 min hard bounds), nudged by how far you\'ve drifted from plan &mdash; use it to pace, not as a new fixed target. If you need more recordings than planned, click <strong>Add another recording</strong> above rather than forcing the total into fewer, longer takes.</p>' +
+    '<p style="font-size:12.5px;color:var(--text-dim);margin-top:0"><strong>Topic discussed</strong> is just for you &mdash; files don\'t appear in Media Files (or become taggable) right away, so jotting the topic down here as you go means you\'re not relying on memory when you get to QA at the end of the session. This selection isn\'t submitted anywhere; use the real Conversation Topics field in the tool when you QA each file.</p>';
 }
 function renderChecklist(){
   let sectionsHtml = getChecklistSections().map(s => {
@@ -1915,7 +1930,7 @@ function renderChecklist(){
     '<div class="viewer">' +
     sectionsHtml +
     '<h2 style="margin-top:26px">Recording tracker</h2>' +
-    '<p style="font-size:14.5px;color:var(--text-dim);line-height:1.6;margin:0 0 14px">A suggested <strong>18 recordings per session</strong>, each on a fresh topic &mdash; pull from the <a href="' + RESOURCES.find(r=>r.id==='topic_bank').url + '" target="_blank" rel="noopener">Topic &amp; Prompt Bank</a>. The real target is the <strong>144-minute total</strong>, not the recording count &mdash; the breakdown below is a pacing guide, not a rigid script, and you may land on more or fewer recordings than listed. Hard bounds for any single recording are <strong>5&ndash;10 min</strong>. Enter each recording&#39;s actual length as you go &mdash; the total updates live.</p>' +
+    '<p style="font-size:14.5px;color:var(--text-dim);line-height:1.6;margin:0 0 14px">A suggested <strong>18 recordings per session</strong>, each on a fresh topic &mdash; pull from the <a href="' + RESOURCES.find(r=>r.id==='topic_bank').url + '" target="_blank" rel="noopener">Topic &amp; Prompt Bank</a>. The real target is the <strong>144-minute total</strong>, not the recording count &mdash; the breakdown below is a pacing guide, not a rigid script, and you may land on more or fewer recordings than listed. Hard bounds for any single recording are <strong>5&ndash;10 min</strong>. Enter each recording&#39;s actual length as you go &mdash; the total updates live, and use the <strong>Topic discussed</strong> dropdown right after each take so you have it to go off of during QA later, since files aren&#39;t taggable in the tool right away.</p>' +
     buildRecTable() +
     '<div style="margin-top:16px"><button class="btn-ghost" onclick="resetRecTally()">Reset checklist &amp; tracker for a new session</button></div>' +
     '<h2 style="margin-top:30px">Mid-take chat templates</h2>' +
@@ -2135,7 +2150,7 @@ function boot(){
       quizIdx = saved.quizIdx || {};
       checklistOpen = saved.checklistOpen || {};
       checklistChecks = saved.checklistChecks || {};
-      recTally = saved.recTally || {};
+      recTally = saved.recTally || {}; recTopics = saved.recTopics || {};
       state.theme = saved.theme || 'dark';
       PROGRESS = saved.progress || [];
       state.screen = state.user.role === 'admin' ? 'admin' : 'app';
