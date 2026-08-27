@@ -262,6 +262,7 @@ a{color:var(--accent-light);}
 .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px var(--accent-glow);}
 .login-err{color:var(--red);font-size:12px;margin-top:8px;min-height:15px;}
 @keyframes shakeCard{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .login-card.shake{animation:shakeCard .35s ease;}
 .demo-note{margin-top:20px;padding-top:16px;border-top:1px dashed var(--border);font-size:12px;color:var(--text-faint);text-align:left;line-height:1.5;}
 .demo-shortcuts{margin-top:22px;padding-top:18px;border-top:1px dashed var(--border);}
@@ -332,7 +333,14 @@ a{color:var(--accent-light);}
 .checklist-body-inner{padding:6px 16px 18px;}
 .rec-table{width:100%;border-collapse:collapse;font-size:13.5px;}
 .rec-table th{text-align:left;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);padding:7px 8px;}
-.rec-topic-select{background:var(--input-bg);border:.5px solid var(--border-strong);color:var(--text);font-size:12.5px;padding:6px 8px;border-radius:8px;min-width:150px;max-width:190px;font-family:var(--font);}
+.topic-trigger{background:var(--bg-elev-2);border:.5px solid var(--border-strong);color:var(--text);font-size:12.5px;padding:7px 10px;border-radius:8px;min-width:150px;max-width:190px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;cursor:pointer;font-family:var(--font);text-align:left;transition:border-color .15s;}
+.topic-trigger:hover{border-color:var(--accent);}
+.topic-trigger-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.topic-trigger svg{flex-shrink:0;color:var(--text-faint);}
+.topic-menu-popup{position:fixed;z-index:900;background:var(--bg-elev);border:.5px solid var(--border-strong);border-radius:12px;box-shadow:var(--shadow-lg);padding:6px;max-height:280px;overflow-y:auto;animation:fadeUp .15s ease both;}
+.topic-menu-item{padding:9px 12px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;white-space:nowrap;transition:background .12s;}
+.topic-menu-item:hover{background:var(--accent-glow);}
+.topic-menu-item.active{background:var(--accent);color:var(--on-accent);font-weight:600;}
 .rec-table td{padding:7px 8px;border-top:1px solid var(--border);}
 .rec-table input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);}
 .complete-hero{text-align:center;padding:16px 0 8px;}
@@ -1899,14 +1907,14 @@ function buildRecTable(){
     const neededVal = Math.min(10, Math.max(5, t + adjustment));
     const neededCell = filled ? '<span style="color:var(--text-dim)">\u2713</span>' : '<span style="color:var(--accent-light);font-weight:600">~' + Math.round(neededVal) + ' min</span>';
     const topicSel = recTopics[key] || '';
-    const topicOpts = '<option value="">&mdash;</option>' + RECORDING_TOPICS.map(top => '<option value="' + top + '"' + (topicSel===top?' selected':'') + '>' + top + '</option>').join('');
+    const topicLabel = topicSel || 'Select…';
     rows += '<tr><td>' + i + '</td><td>~' + t + ' min</td><td>' +
       '<div class="rec-stepper">' +
         '<button class="step-btn" onclick="adjustRec(\'' + key + '\',-1)" aria-label="Decrease minutes">&minus;</button>' +
         '<input type="text" inputmode="numeric" class="step-val" value="' + (val || '') + '" placeholder="0" onfocus="this.select()" onchange="setRecMinutes(\'' + key + '\', this.value)" onblur="if(!this.value)this.value=\'\'">' +
         '<button class="step-btn" onclick="adjustRec(\'' + key + '\',1)" aria-label="Increase minutes">+</button>' +
       '</div>' +
-    '</td><td>' + neededCell + '</td><td><select class="rec-topic-select" onchange="setRecTopic(\'' + key + '\',this.value)">' + topicOpts + '</select></td></tr>';
+    '</td><td>' + neededCell + '</td><td><button type="button" class="topic-trigger" data-topic-key="' + key + '" onclick="toggleTopicMenu(\'' + key + '\',event)"><span class="topic-trigger-label"' + (topicSel?'':' style="color:var(--text-faint)"') + '>' + topicLabel + '</span><svg width="11" height="11" viewBox="0 0 18 18" fill="none"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></td></tr>';
   });
   return '<div class="tracker-summary">' +
       '<div class="ts-block"><div class="ts-label">Recorded so far</div><div class="ts-value accent">' + total + ' min</div></div>' +
@@ -2127,7 +2135,49 @@ function render(){
     const m = MODULES.find(x => x.id === state.moduleId);
     if (m && m.video) injectVideoEmbed(m.video);
   }
+  positionTopicMenu();
 }
+
+/* ===================== CUSTOM TOPIC DROPDOWN =====================
+   Native <select> option lists can't be reliably themed or rounded
+   across browsers/OSes (confirmed: color-scheme helps pick light vs
+   dark, but the popup itself stays native chrome, unrounded, and
+   sometimes ignores the page theme entirely). This is a real custom
+   popup instead: a themed trigger button + a position:fixed popup
+   appended to <body> (so it escapes the table's overflow-x:auto
+   clipping), positioned off the trigger's own bounding rect after
+   every render. Closes on click-outside or on selecting an item. */
+let _topicMenuOpenFor = null;
+function toggleTopicMenu(key, ev){
+  ev.stopPropagation();
+  _topicMenuOpenFor = (_topicMenuOpenFor === key) ? null : key;
+  render();
+}
+function chooseTopic(key, topic){
+  setRecTopic(key, topic); // already calls persistLocal()+render()
+  _topicMenuOpenFor = null;
+}
+function positionTopicMenu(){
+  let popup = document.getElementById('topicMenuPopup');
+  if (_topicMenuOpenFor === null) { if (popup) popup.remove(); return; }
+  const trigger = document.querySelector('[data-topic-key="' + _topicMenuOpenFor + '"]');
+  if (!trigger) { if (popup) popup.remove(); _topicMenuOpenFor = null; return; }
+  if (!popup) { popup = document.createElement('div'); popup.id = 'topicMenuPopup'; popup.className = 'topic-menu-popup'; document.body.appendChild(popup); }
+  const current = recTopics[_topicMenuOpenFor] || '';
+  popup.innerHTML = RECORDING_TOPICS.map(t => '<div class="topic-menu-item' + (t===current?' active':'') + '" onclick="chooseTopic(\'' + _topicMenuOpenFor + '\',\'' + t + '\')">' + t + '</div>').join('');
+  const rect = trigger.getBoundingClientRect();
+  const width = Math.max(rect.width, 190);
+  popup.style.width = width + 'px';
+  popup.style.top = (rect.bottom + 6) + 'px';
+  popup.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8)) + 'px';
+}
+document.addEventListener('click', function(e){
+  if (_topicMenuOpenFor !== null && !e.target.closest('.topic-menu-popup') && !e.target.closest('.topic-trigger')) {
+    _topicMenuOpenFor = null;
+    positionTopicMenu();
+  }
+});
+window.addEventListener('resize', positionTopicMenu);
 function injectVideoEmbed(key){
   const slot = document.querySelector('[data-video="' + key + '"] [id^="vidslot-"]') || document.getElementById('vidslot-' + key);
   if (!slot) return;
